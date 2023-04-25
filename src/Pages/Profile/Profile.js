@@ -5,6 +5,7 @@ import auth from '../../firebase.init';
 const Profile = () => {
     const [user, loading, error] = useAuthState(auth);
     let email = user?.email.slice(0, 1)
+    console.log(user);
     return (
         <div className='flex justify-center'>
             <div style={{ width: '500px' }} className="card bg-base-100 shadow-xl bg-gradient-to-r from-gray-500 to-gray-300">
@@ -16,7 +17,7 @@ const Profile = () => {
                     </div>
                 </figure>
                 <div className="card-body items-center text-center">
-                    <h2 className="card-title">{user?.displayName || email}</h2>
+                    <h2 className="card-title">Name: {user?.displayName || email}</h2>
                     <p className='font-bold'>Email: {user?.email}</p>
                 </div>
             </div>

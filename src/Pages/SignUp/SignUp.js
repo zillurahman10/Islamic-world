@@ -2,10 +2,22 @@ import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import signUp from '../../assets/signup.gif'
 import auth from '../../firebase.init';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 
 const SignUp = () => {
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+
+    const handleCreateUser = e => {
+        e.preventDefault()
+        const email = e.target.email.value
+        console.log(email);
+    }
 
     return (
         <div>
@@ -15,32 +27,32 @@ const SignUp = () => {
                         <img src={signUp} alt=""></img>
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <div className="card-body">
+                        <form onSubmit={() => handleCreateUser()} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="text" placeholder="email" className="input input-bordered" />
+                                <input name='email' type="text" placeholder="email" className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="text" placeholder="password" className="input input-bordered" />
+                                <input name='password' type="text" placeholder="password" className="input input-bordered" />
                                 <label className="label">
                                     <span className="label-text">Confirm Password</span>
                                 </label>
-                                <input type="text" placeholder="Confirm password" className="input input-bordered" />
+                                <input name='confirm password' type="text" placeholder="Confirm password" className="input input-bordered" />
 
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Sign Up</button>
+                                <input type="submit" value="Sign Up" className='btn btn-primary'></input>
                             </div>
 
                             <p className='text-center'>----------  Or  ----------</p>
                             <button onClick={() => signInWithGoogle()} className='btn btn-neutral'>Sign in with GOOGLE</button>
                             <p className='pt-5 text-center'>Already in Al-Quran? <Link className='reset-btn' to="/login">Login now</Link></p>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
